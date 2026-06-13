@@ -232,7 +232,11 @@ sum(is.na(processed_data$ai_augmentation_score))
 sum(is.na(processed_data$ai_automation_score))
 ```
 
-11. 
+11. Save the processed data into the `processed_data` directory.
+
+```{r}
+write_rds(processed_data, "processed_data/merged_data.rds")
+```
 
 <!-- Task 2 Tab: Writing your blogpost -->
 
