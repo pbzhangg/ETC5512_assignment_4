@@ -11,15 +11,17 @@ editor: visual
 
 ## Data and Documenting
 
-### What's in this section
+1.  **Research Question**
 
-Here is where you should provide the more comprehensive details about your data and your processing steps.
+    How is AI exposure distributed across occupations and demographic groups in Australia?
 
-These are the data details that an "average" blog post reader is not concerned with (Task 1).
+    **Motivation**
 
-### Remember
+    Generative AI has rapidly become one of the most significant technological developments shaping the world and particularly modern workplaces. More than 50% of organisations in Australia have reportedly integrated AI into their operations (CSIRO, 2025), and the adoption of AI is expected to continue rising with significant impact across different occupations and industries. Jobs and Skills Australia (2025) identifies generative AI as a major force likely to influence the Australian labour market, with effects depending on occupational tasks, workplace adoption, and workforce adaptation.
 
-Please mention any additional files that you want the markers to review, eg. read me, meta data etc.
+    Understanding AI exposure is becoming increasingly important as the impacts of AI use are likely to be unevenly distributed across the workforce. Jobs and Skills Australia (2025) suggests that generative AI is more likely to augment human work than replace it, where the greatest potential for automation is concentrated in more routine tasks. The report also highlighted substantial differences in AI exposure across occupations, indicating that some workers may experience greater changes to their work than others.
+
+    This topic was chosen because it combines a highly relevant contemporary issue with publicly available Australian labour market data and demographic census data. By examining how AI exposure is distributed across occupations and demographic groups, the analysis aims to identify which workers may be most affected by technological change and contribute to broader discussions about workforce adaptation, training needs, and future employment opportunities.
 
 <!-- Task 2 Tab: Writing your blogpost -->
 
