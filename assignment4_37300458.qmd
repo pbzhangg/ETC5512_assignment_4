@@ -213,6 +213,27 @@ clean_census_data <- clean_census_data %>%
   select(-STE_CODE_2021, -AREA_ALBERS_SQKM, -occupation)
 ```
 
+10. Merge the datasets.
+
+```{r}
+state_geometry <- raw_census_data %>%
+  distinct(STE_NAME_2021, geom) %>%
+  st_as_sf()
+
+mismatch_check <- anti_join(clean_census_data, clean_exposure_data, by = "major_occupation_group")
+mismatch_check
+
+processed_data <- clean_census_data %>%
+  left_join(clean_exposure_data, by = "major_occupation_group") %>%
+  left_join(state_geometry, by = c("state" = "STE_NAME_2021")) %>%
+  st_as_sf()
+
+sum(is.na(processed_data$ai_augmentation_score))
+sum(is.na(processed_data$ai_automation_score))
+```
+
+11. 
+
 <!-- Task 2 Tab: Writing your blogpost -->
 
 ## Blog post
