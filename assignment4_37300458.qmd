@@ -139,6 +139,12 @@ clean_exposure_data <- clean_exposure_data %>%
   select(major_occupation_group, ai_augmentation_score, ai_automation_score, hybridisation, specialisation)
 ```
 
+5.  Explore the raw census dataset.
+
+```{r}
+summary(raw_census_data)
+```
+
 <!-- Task 2 Tab: Writing your blogpost -->
 
 ## Blog post
