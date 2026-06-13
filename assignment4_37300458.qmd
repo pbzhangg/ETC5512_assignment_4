@@ -73,6 +73,24 @@ editor: visual
     3.  Click the **Download** button for the *JSA AI Study Interactive Tables* under the Download subsection.
     4.  Save the downloaded XLS data as `raw_exposure_data.xlsx` into the `raw_data` directory.
 
+```{r}
+# Load in required packages for reading in raw data
+library(readxl)
+library(sf)
+
+# Read in the raw data from the raw_data directory
+raw_exposure_data <- read_excel("raw_data/raw_exposure_data.xlsx", sheet = "Occupation", skip = 6)
+
+geopath_2021_G60A <- here::here("raw_data/Geopackage_2021_G60_AUST_GDA2020/G60A_AUST_GDA2020.gpkg")
+geopath_2021_G60B <- here::here("raw_data/Geopackage_2021_G60_AUST_GDA2020/G60B_AUST_GDA2020.gpkg")
+
+st_layers(geopath_2021_G60A)
+st_layers(geopath_2021_G60B)
+
+raw_census_data_A <-read_sf(geopath_2021_G60A, layer = "G60A_STE_2021_AUST")
+raw_census_data_B <- read_sf(geopath_2021_G60B, layer = "G60A_STE_2021_AUST")
+```
+
 <!-- Task 2 Tab: Writing your blogpost -->
 
 ## Blog post
