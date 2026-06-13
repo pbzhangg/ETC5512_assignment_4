@@ -51,6 +51,28 @@ editor: visual
 
     Ethically, care must be taken when interpreting AI exposure scores such that high exposure does not necessarily imply that jobs will be replaced, as many occupations are expected to experience task augmentation rather than full automation. Results should therefore be interpreted as indicators of potential workplace change rather than predictions of employment outcomes.
 
+3.  **Data Download**
+
+    The two datasets were directly downloaded from their respective sources and stored separately to preserve the original files.
+
+    For the Australian Bureau of Statistics (ABS) Census Data:
+
+    1.  Go to [Search Census GeoPackages](https://www.abs.gov.au/census/find-census-data/geopackages?release=2021&geography=AUST&table=G60&gda=GDA2020) on the Australian Bureau of Statistics webpage.
+    2.  For **census date** select *2021*.
+    3.  For **state or territory** select *All geographies*.
+    4.  For **table or topic** select *Table*.
+    5.  Select *G60 - Occupation by age by sex* from the drop-down list.
+    6.  For **GDA type** select GDA2020.
+    7.  Download the ZIP file for the G60 - Occupation by age by sex GeoPackage as `Geopackage_2021_G60_AUST_GDA2020.zip`
+    8.  Unzip the file and move the folder into the `raw_data` directory.
+
+    For the Jobs and Skills Australia Generative AI Exposure Data:
+
+    1.  Go to [Our Gen AI Transition](https://www.jobsandskills.gov.au/studies/generative-artificial-intelligence-capacity-study#datatableanddownlo) on the Jobs and Skills Australia website.
+    2.  Scroll down to the *Data table and downloads* section.
+    3.  Click the **Download** button for the *JSA AI Study Interactive Tables* under the Download subsection.
+    4.  Save the downloaded XLS data as `raw_exposure_data.xlsx` into the `raw_data` directory.
+
 <!-- Task 2 Tab: Writing your blogpost -->
 
 ## Blog post
