@@ -91,6 +91,54 @@ raw_census_data_A <-read_sf(geopath_2021_G60A, layer = "G60A_STE_2021_AUST")
 raw_census_data_B <- read_sf(geopath_2021_G60B, layer = "G60A_STE_2021_AUST")
 ```
 
+**Data Processing Steps**
+
+1.  Explore the raw exposure dataset.
+
+```{r}
+# Load in tidyverse package
+library(tidyverse)
+
+summary(raw_exposure_data)
+```
+
+2.  Remove non-data rows.
+
+```{r}
+clean_exposure_data <- raw_exposure_data %>%
+  slice(1:(n() - 2))
+```
+
+3.  Aggregate occupations into major groups.
+
+```{r}
+clean_exposure_data <- clean_exposure_data %>%
+  mutate(major_group_code = substr(`ANZSCO unit code`, 1, 1),
+         major_occupation_group = case_when(
+           major_group_code == "1" ~ "Managers",
+           major_group_code == "2" ~ "Professionals",
+           major_group_code == "3" ~ "Technicians and Trades Workers",
+           major_group_code == "4" ~ "Community and Personal Service Workers",
+           major_group_code == "5" ~ "Clerical and Administrative Workers",
+           major_group_code == "6" ~ "Sales Workers",
+           major_group_code == "7" ~ "Machinery Operators and Drivers",
+           major_group_code == "8" ~ "Labourers"
+         ))
+```
+
+4.  Aggregate AI and potential scores into mean values for each major occupation group and keep relevant variables only.
+
+```{r}
+clean_exposure_data <- clean_exposure_data %>%
+  group_by(major_occupation_group) %>%
+  summarise(ai_augmentation_score = mean(`Augmentation exposure score`, na.rm = TRUE),
+            ai_automation_score = mean(`Automation exposure score`, na.rm = TRUE),
+            hybridisation = mean(`Hybridisation potential (differential score; scaled  x 1000)`, na.rm = TRUE),
+            specialisation = mean(`Specialisation potential (differential score; scaled x 1000)`, na.rm = TRUE),
+            .groups = "drop") %>%
+  select(major_occupation_group, ai_augmentation_score, ai_automation_score, hybridisation, specialisation)
+```
+
 <!-- Task 2 Tab: Writing your blogpost -->
 
 ## Blog post
