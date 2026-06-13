@@ -82,13 +82,10 @@ library(sf)
 raw_exposure_data <- read_excel("raw_data/raw_exposure_data.xlsx", sheet = "Occupation", skip = 6)
 
 geopath_2021_G60A <- here::here("raw_data/Geopackage_2021_G60_AUST_GDA2020/G60A_AUST_GDA2020.gpkg")
-geopath_2021_G60B <- here::here("raw_data/Geopackage_2021_G60_AUST_GDA2020/G60B_AUST_GDA2020.gpkg")
 
 st_layers(geopath_2021_G60A)
-st_layers(geopath_2021_G60B)
 
-raw_census_data_A <-read_sf(geopath_2021_G60A, layer = "G60A_STE_2021_AUST")
-raw_census_data_B <- read_sf(geopath_2021_G60B, layer = "G60A_STE_2021_AUST")
+raw_census_data <-read_sf(geopath_2021_G60A, layer = "G60A_STE_2021_AUST")
 ```
 
 **Data Processing Steps**
