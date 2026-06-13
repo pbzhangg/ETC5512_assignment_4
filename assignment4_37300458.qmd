@@ -142,6 +142,77 @@ clean_exposure_data <- clean_exposure_data %>%
 summary(raw_census_data)
 ```
 
+6.  Use string manipulation to split the demographics.
+
+```{r}
+names(raw_census_data) <- names(raw_census_data) %>%
+  str_replace_all("85_?ov", "85_99")
+
+clean_census_data <- raw_census_data %>%
+  st_drop_geometry() %>%
+  pivot_longer(cols = -c(STE_NAME_2021, STE_CODE_2021, AREA_ALBERS_SQKM), names_to = "variable", values_to = "count")
+
+clean_census_data <- clean_census_data %>%
+  extract(
+    variable,
+    into = c("sex", "age_group", "occupation"),
+    regex = "^([MF])([0-9_]+)_(.*)$"
+  ) %>%
+  mutate(
+    sex = case_when(
+      sex == "M" ~ "Male",
+      sex == "F" ~ "Female"
+    ),
+    age_group = case_when(
+      age_group == "85_99" ~ "85+",
+      TRUE ~ str_replace_all(age_group, "_", "-")
+    )
+  )
+```
+
+7.  Rename the occupations to match the major occupation groups in the cleaned exposure data.
+
+```{r}
+unique(clean_census_data$occupation)
+
+clean_census_data <- clean_census_data %>%
+  mutate(major_occupation_group = case_when(
+    occupation == "CommunPersnlSvc_W" ~ "Community and Personal Service Workers",
+    occupation == "ClericalAdminis_W" ~ "Clerical and Administrative Workers",
+    occupation == "Sales_W" ~ "Sales Workers",
+    occupation == "Mach_oper_drivers" ~ "Machinery Operators and Drivers",
+    occupation %in% c("TechnicTrades_Wrs", "TechnicTrades_W") ~ "Technicians and Trades Workers",
+    TRUE ~ occupation))
+  
+```
+
+8.  Filter out any rows that aren't major occupation groups (e.g. totals).
+
+```{r}
+unique(clean_census_data$major_occupation_group)
+
+clean_census_data <- clean_census_data %>%
+  filter(major_occupation_group %in% c(
+    "Managers", 
+    "Professionals", 
+    "Technicians and Trades Workers", 
+    "Community and Personal Service Workers", 
+    "Clerical and Administrative Workers", 
+    "Sales Workers", 
+    "Machinery Operators and Drivers", 
+    "Labourers"))
+
+unique(clean_census_data$major_occupation_group)
+```
+
+9.  Keep relevant variables only.
+
+```{r}
+clean_census_data <- clean_census_data %>%
+  rename(state = STE_NAME_2021) %>%
+  select(-STE_CODE_2021, -AREA_ALBERS_SQKM, -occupation)
+```
+
 <!-- Task 2 Tab: Writing your blogpost -->
 
 ## Blog post
