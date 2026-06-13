@@ -1,10 +1,10 @@
 Variable, Data_Type, Description, Derivation
 state, character, Australian state or territory of residence, Directly from ABS Census (STE_NAME_2021)
-sex, character, Reported sex of workers, Extracted from ABS Census variable encoding (M/F)
+sex, character, Sex of employed persons, Extracted from ABS Census variable encoding (M/F)
 age_group, character, Age group of workers, Parsed from ABS Census variable names
 count, numeric, Number of employed persons in each demographic-occupation group, ABS Census frequency counts
-major_occupation_group, character, ANZSCO major occupation classification, JSA occupational categories aggregated and mapped to ABS Census occupation classification
-ai_augmentation_score, numeric, Estimated generative AI augmentation exposure score for occupation, Mean augmentation score from JSA occupational dataset
-ai_automation_score, numeric, Estimated generative AI automation exposure score for occupation, Mean automation score from JSA occupational dataset
-hybridisation, numeric, Index of occupational hybridisation potential, Mean of JSA hybridisation differential scores (scaled by 1000)
-specialisation, numeric, Index of occupational specialisation potential, Mean of JSA specialisation differential scores (scaled by 1000)
+major_occupation_group, character, ANZSCO major occupation classification, JSA occupational categories aggregated and aligned with ABS Census occupation classifications
+ai_augmentation_score, numeric, Estimated generative AI augmentation exposure score for the occupation group, Mean augmentation score from JSA occupational dataset
+ai_automation_score, numeric, Estimated generative AI automation exposure score for the occupation group, Mean automation score from JSA occupational dataset
+hybridisation, numeric, Occupational hybridisation potential index, Mean of JSA hybridisation differential scores (scaled by 1000)
+specialisation, numeric, Occupational specialisation potential index, Mean of JSA specialisation differential scores (scaled by 1000)

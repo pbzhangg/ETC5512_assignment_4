@@ -1,7 +1,7 @@
 Data Origin
 
-This project combines two publicly available datasets to examine how generative 
-AI exposure varies across occupations and demographic groups in Australia.
+This project combines two publicly available datasets to examine how demographic 
+characteristics are associated with generative AI exposure across occupations in Australia.
 
 The first dataset is the Australian Bureau of Statistics (ABS) Census 2021 G60: 
 Occupation by Age by Sex dataset. This dataset was obtained from the Australian 
@@ -31,8 +31,9 @@ This file contains the final processed dataset used for analysis. The dataset
 combines ABS Census 2021 demographic and occupational count data with Jobs and 
 Skills Australia generative AI exposure scores. It includes variables state, sex, 
 age group, major occupation group, employment counts, and occupational AI exposure 
-measures. The dataset is structured to support analysis of how generative AI exposure 
-varies across demographic and occupational groups in the Australian workforce.
+measures. The dataset is structured to support analysis of occupational AI exposure 
+patterns, demographic representation within highly exposed occupations, and differences 
+between AI augmentation and AI automation across occupational groups.
 
 data_dictionary.csv
 This file contains the data dictionary for the processed dataset. It describes 
@@ -51,8 +52,8 @@ and publicly available data sources.
 Intended Use
 
 This project is intended for academic and research purposes, specifically to analyse 
-the distribution of generative AI exposure across different occupations and demographic 
-groups in the Australian workforce. The data and scripts are designed to support 
+how demographic characteristics are associated with exposure to generative AI across 
+occupations in the Australian workforce. The data and scripts are designed to support 
 reproducible analysis, statistical modelling, and data visualisation to answer the 
 research questions.
 
@@ -72,9 +73,11 @@ and do not represent actual AI usage or real-world employment outcomes. The ABS
 Census data reflects the 2021 labour market and may not capture more recent changes 
 in occupational structure or employment patterns. Differences in classification 
 systems between ABS and JSA required aggregation of occupations, which may reduce 
-classification detail. Furthermore, within-occupation variation in AI exposure is 
-not captured, and spatial data included in the dataset is used solely for visualisation 
-purposes.
+classification detail. The dataset does not contain direct measures of AI adoption, 
+wages, productivity, or employment outcomes, meaning the analysis focuses on 
+occupational exposure to generative AI rather than realised labour market impacts. 
+Furthermore, within-occupation variation in AI exposure is not captured, and 
+spatial data included in the dataset is used solely for visualisation purposes.
 
 Reproducibility
 

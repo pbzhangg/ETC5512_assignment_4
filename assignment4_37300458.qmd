@@ -11,9 +11,17 @@ editor: visual
 
 ## Data and Documenting
 
-1.  **Research Question**
+1.  **Main Research Question**
 
-    How is AI exposure distributed across occupations and demographic groups in Australia?
+    How do demographic characteristics influence exposure to generative AI across occupations in Australia?
+
+    **Sub-Questions**
+
+    -   Which occupations exhibit the highest and lowest levels of generative AI exposure scores?
+
+    -   Which demographic groups (age and sex) are most concentrated in occupations with high AI-exposure?
+
+    -   To what extent are highly AI-exposed occupations characterised by AI augmentation versus AI automation?
 
     **Motivation**
 
@@ -21,11 +29,11 @@ editor: visual
 
     Understanding AI exposure is becoming increasingly important as the impacts of AI use are likely to be unevenly distributed across the workforce. Jobs and Skills Australia (2025) suggests that generative AI is more likely to augment human work than replace it, where the greatest potential for automation is concentrated in more routine tasks. The report also highlighted substantial differences in AI exposure across occupations, indicating that some workers may experience greater changes to their work than others.
 
-    This topic was chosen because it combines a highly relevant contemporary issue with publicly available Australian labour market data and demographic census data. By examining how AI exposure is distributed across occupations and demographic groups, the analysis aims to identify which workers may be most affected by technological change and contribute to broader discussions about workforce adaptation, training needs, and future employment opportunities.
+    This topic was chosen because it combines a highly relevant contemporary issue with publicly available Australian labour market data and demographic census data. By examining how AI exposure is distributed across occupations and demographic groups, the analysis aims to identify which occupations exhibit the most extreme levels of AI exposure, and whether these highly exposed occupations are characterised more by AI augmentation or AI automation. This contributes to a better understanding of how exposure to generative AI is distributed across the Australian workforce.
 
 2.  **Data Sources**
 
-    To investigate how AI exposure is distributed across occupations and demographic groups in Australia, two datasets will be combined:
+    To investigate how demographic characteristics are associated with exposure to generative AI across occupations in Australia, two datasets will be combined:
 
     -   Australian Bureau of Statistics (ABS) Census Data
 
@@ -33,7 +41,7 @@ editor: visual
 
     The first dataset is the 2021 Australian Census G60: Occupation by Age by Sex Geopackage published by the Australian Bureau of Statistics (ABS). The data is from the 2021 population census which aimed to collect information from all people in Australia on census night in 2021. The dataset contains counts of employed persons by occupation, age group, sex, and geographic region, providing detailed demographic information about the Australian workforce.
 
-    This dataset is appropriate for the analysis because it provides comprehensive workforce demographic information that can be linked to occupational AI exposure measures using occupation codes or classifications. Using Census data also reduces sampling error that may be present in survey-based datasets due to its near-complete population coverage.
+    This dataset is appropriate for the analysis because it provides comprehensive demographic information on the Australian workforce that can be linked to occupation-level AI exposure measures using occupation codes or classifications. The data enables analysis of the age and sex composition of different occupational groups and the demographic distribution of workers across occupations with varying levels of AI exposure. Using Census data also reduces sampling error that may be present in survey-based datasets due to its near-complete population coverage.
 
     The data was released under the Creative Commons Attribution 4.0 International (CC BY 4.0) licence, allowing reuse with appropriate attribution to the ABS.
 
@@ -43,13 +51,13 @@ editor: visual
 
     The second dataset is the occupation-level Generative AI Exposure dataset published by Jobs and Skills Australia as part of their "*Our Gen AI Transition: Exposure, Adaptation and Dynamism*" study. The dataset is a model-based research dataset containing estimated measures of generative AI exposure for occupations, including indicators describing the extent to which AI may augment or automate occupational tasks within an occupation.
 
-    This dataset is suitable for this analysis because it directly measures the potential exposure of occupations to generative AI technologies. Linking these exposure scores to Census occupation data enables the analysis to build on Jobs and Skills Australia's existing report and investigate how AI exposure is distributed across different demographic groups within the Australian workforce.
+    This dataset is suitable for this analysis because it directly measures the potential exposure of occupations to generative AI technologies. Linking these exposure scores to Census occupation data enables the analysis to build on Jobs and Skills Australia's existing report and identify how AI exposure is distributed across different demographic groups within highly exposed occupations, and compare the relative importance of augmentation and automation in the Australian workforce.
 
     The dataset is publicly available through Jobs and Skills Australia and is released under the Australian Government's Creative Commons Attribution (CC BY) licence.
 
-    A key limitation of this dataset is that the exposure measures are model-based estimates rather than real observed workplace outcomes. The scores indicate the potential impact of generative AI on occupational tasks and should not be interpreted as true measures of AI adoption or job displacement in Australia. Additionally, the estimates may change over time as AI technologies and workplace practices continue to evolve.
+    A key limitation of this dataset is that the exposure measures are model-based estimates rather than real observed workplace outcomes. The scores indicate the potential exposure of generative AI on occupational tasks and should not be interpreted as true measures of AI adoption or job displacement in Australia. Additionally, the estimates may change over time as AI technologies and workplace practices continue to evolve.
 
-    Ethically, care must be taken when interpreting AI exposure scores such that high exposure does not necessarily imply that jobs will be replaced, as many occupations are expected to experience task augmentation rather than full automation. Results should therefore be interpreted as indicators of potential workplace change rather than predictions of employment outcomes.
+    Ethically, care must be taken when interpreting AI exposure scores such that high exposure does not necessarily imply that jobs will be replaced, as many occupations are expected to experience task augmentation rather than full automation. Results should therefore be interpreted as indicators of occupational exposure to generative AI rather than predictions of employment outcomes and job replacement.
 
 3.  **Data Download**
 
@@ -123,7 +131,7 @@ clean_exposure_data <- clean_exposure_data %>%
          ))
 ```
 
-4.  Aggregate AI and potential scores into mean values for each major occupation group and keep relevant variables only.
+4.  Aggregate occupation-level AI exposure measures into mean values for each ANZSCO major occupation group and retain relevant variables only.
 
 ```{r}
 clean_exposure_data <- clean_exposure_data %>%
@@ -170,7 +178,7 @@ clean_census_data <- clean_census_data %>%
   )
 ```
 
-7.  Rename the occupations to match the major occupation groups in the cleaned exposure data.
+7.  Align occupation classification names between the ABS Census data and the JSA exposure dataset to enable merging.
 
 ```{r}
 unique(clean_census_data$occupation)
@@ -186,7 +194,7 @@ clean_census_data <- clean_census_data %>%
   
 ```
 
-8.  Filter out any rows that aren't major occupation groups (e.g. totals).
+8.  Retain only ANZSCO major occupation groups that can be directly matched to the JSA exposure data (e.g. totals).
 
 ```{r}
 unique(clean_census_data$major_occupation_group)
@@ -213,7 +221,7 @@ clean_census_data <- clean_census_data %>%
   select(-STE_CODE_2021, -AREA_ALBERS_SQKM, -occupation)
 ```
 
-10. Merge the datasets.
+10. Merge the cleaned ABS Census and JSA datasets using the major occupation group classification.
 
 ```{r}
 mismatch_check <- anti_join(clean_census_data, clean_exposure_data, by = "major_occupation_group")
@@ -236,7 +244,7 @@ write_rds(processed_data, "processed_data/merged_data.rds")
 
 In addition to the main analysis report, the following files are provided for marker review.
 
--   README.txt: This file contains detailed documentation of the project, including data origin, files included, intended use, assumptions, limitations, and reproducibility.
+-   README.txt: This file contains detailed documentation of the project, including data origin, files included, intended use, assumptions, limitations, and reproducibility instructions.
 
 -   data_dictionary.csv: This file describes all variables in the final processed dataset, including variable names, data types, descriptions and derivation methods.
 
