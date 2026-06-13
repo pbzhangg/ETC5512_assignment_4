@@ -23,6 +23,34 @@ editor: visual
 
     This topic was chosen because it combines a highly relevant contemporary issue with publicly available Australian labour market data and demographic census data. By examining how AI exposure is distributed across occupations and demographic groups, the analysis aims to identify which workers may be most affected by technological change and contribute to broader discussions about workforce adaptation, training needs, and future employment opportunities.
 
+2.  **Data Sources**
+
+    To investigate how AI exposure is distributed across occupations and demographic groups in Australia, two datasets will be combined:
+
+    -   Australian Bureau of Statistics (ABS) Census Data
+
+    -   Jobs and Skills Australia Generative AI Exposure Data
+
+    The first dataset is the 2021 Australian Census G60: Occupation by Age by Sex Geopackage published by the Australian Bureau of Statistics (ABS). The data is from the 2021 population census which aimed to collect information from all people in Australia on census night in 2021. The dataset contains counts of employed persons by occupation, age group, sex, and geographic region, providing detailed demographic information about the Australian workforce.
+
+    This dataset is appropriate for the analysis because it provides comprehensive workforce demographic information that can be linked to occupational AI exposure measures using occupation codes or classifications. Using Census data also reduces sampling error that may be present in survey-based datasets due to its near-complete population coverage.
+
+    The data was released under the Creative Commons Attribution 4.0 International (CC BY 4.0) licence, allowing reuse with appropriate attribution to the ABS.
+
+    Limitations of the dataset include that it reflects workforce characteristics at the time of the 2021 Census and may not fully represent current labour market conditions, as workplace composition and occupation classifications may have changed between 2021 to 2025. Furthermore, occupation categories are aggregated and may conceal variation within occupations.
+
+    From an ethical and privacy perspective, the ABS applies confidentiality procedures before releasing Census data. The dataset contains aggregated counts only and does not include any personally identifiable information, resulting in minimal privacy concerns.
+
+    The second dataset is the occupation-level Generative AI Exposure dataset published by Jobs and Skills Australia as part of their "*Our Gen AI Transition: Exposure, Adaptation and Dynamism*" study. The dataset is a model-based research dataset containing estimated measures of generative AI exposure for occupations, including indicators describing the extent to which AI may augment or automate occupational tasks within an occupation.
+
+    This dataset is suitable for this analysis because it directly measures the potential exposure of occupations to generative AI technologies. Linking these exposure scores to Census occupation data enables the analysis to build on Jobs and Skills Australia's existing report and investigate how AI exposure is distributed across different demographic groups within the Australian workforce.
+
+    The dataset is publicly available through Jobs and Skills Australia and is released under the Australian Government's Creative Commons Attribution (CC BY) licence.
+
+    A key limitation of this dataset is that the exposure measures are model-based estimates rather than real observed workplace outcomes. The scores indicate the potential impact of generative AI on occupational tasks and should not be interpreted as true measures of AI adoption or job displacement in Australia. Additionally, the estimates may change over time as AI technologies and workplace practices continue to evolve.
+
+    Ethically, care must be taken when interpreting AI exposure scores such that high exposure does not necessarily imply that jobs will be replaced, as many occupations are expected to experience task augmentation rather than full automation. Results should therefore be interpreted as indicators of potential workplace change rather than predictions of employment outcomes.
+
 <!-- Task 2 Tab: Writing your blogpost -->
 
 ## Blog post
