@@ -232,6 +232,14 @@ sum(is.na(processed_data$ai_automation_score))
 write_rds(processed_data, "processed_data/merged_data.rds")
 ```
 
+**Additional Files for Marker Review**
+
+In addition to the main analysis report, the following files are provided for marker review.
+
+-   README.txt: This file contains detailed documentation of the project, including data origin, files included, intended use, assumptions, limitations, and reproducibility.
+
+-   data_dictionary.csv: This file describes all variables in the final processed dataset, including variable names, data types, descriptions and derivation methods.
+
 <!-- Task 2 Tab: Writing your blogpost -->
 
 ## Blog post
