@@ -1,7 +1,7 @@
 ---
 title: "Who is most exposed to generative AI? Occupations and demographics in the Australian workforce"
 subtitle: "Assignment 4 ETC5512"
-author: "Who are you?? Add your name here"
+author: "Phoebe Zhang"
 format: html
 editor: visual
 ---
@@ -474,9 +474,67 @@ Wickham H, Bryan J (2025). *readxl: Read Excel Files*. doi:10.32614/CRAN.package
 
 ## Behind the Scenes
 
-### What's in this section
+5.  One of the "non-sexy" data processing steps involved aligning occupation classifications between the two datasets. Even though both datasets use ANZSCO groupings, the labels were not fully consistent. Thus, they required manual recoding using `case_when()`, supported by repeated checks with `unique()` and `anti_join()` to ensure all relevant occupational groups were correctly matched and none were lost of misaligned.
 
-Here is where you should tell us about your reflection on your analysis (Task 3).
+    Another "non-sexy" aspect of the processed data is that it is in a long format with each row representing a combination of sex, age group, and occupation, with corresponding employment counts. As a result, the occupation-level AI exposure scores from the JSA dataset are repeated across multiple demographic rows, which introduced repetition.
 
-Again, these are the details about **your** perspective and the gritty details behind the scenes of your analysis.
+    The ABS Census data was originally stored in a wide format with demographic information encoded within variable names. This required parsing using string manipulation to extract sex, age group, and occupation identifiers. The age categories were not consistently formatted, requiring additional cleaning to ensure that the age groups were correctly transformed into meaningful labels.
+
+    Considerable effort was spent on validating intermediate outputs, such as checking for missing values after merging datasets and verifying that aggregation steps preserved correct data structures. While these steps were not included in the final blog report, they were essential to ensure that the final dataset was reliable and analytically valid.
+
+6.  One challenge encountered during the analysis was determining an appropriate scope for the research question. Initially, the project aimed to investigate how AI exposure was distributed across occupations and demographic groups in Australia. However, feedback suggesting that this scope was too broad. After consideration, I revised the main research question to focus on how demographic characteristics influenced AI exposure, but this suggested the need for formal relationship testing. After exploring the available data and reflecting on what could be meaningfully supported, the focus was refined to examining how demographic groups are distributed across occupations with different levels of AI exposure rather than attempting to infer causal relationships.
+
+    Another challenge arose when merging the two datasets. Despite both using ANZSCO occupational classifications, the occupation labels were not directly compatible, spanning across different classification levels. This required manual recoding and validation before merging. It was important to ensure that all occupational groups were correctly aligned as any mismatches would have affected the AI exposure estimates assigned to the demographic groups.
+
+    A further challenge involved the interpretation of demographic results. Initially, I found it difficult to distinguish between analysing the composition of highly AI-exposed occupations and analysing the proportion of each demographic group employed in highly AI-exposed occupations. Although these approaches appear similar, they answer different research questions and can lead to different conclusions. Working through this distinction required additional investigation with the help of AI and refinement of the analysis, but ultimately helped clarify the interpretation of the results.
+
+7.  One limitation of the analysis is that the AI exposure measure are available only at the occupation level and represent model-based estimates rather than observed AI adoption measures. As a result, workers within the same occupation are assigned the same exposure score even though their actual exposure to generative AI may vary substantially. To enable merging with the ABS Census data, occupations in the JSA dataset were aggregated up to the ANZSCO major occupation group level, which may conceal important variation within occupational categories.
+
+    Another limitation is that the analysis focuses only on age and sex because these demographic variables were readily available in the Census dataset. Other characteristics that may be relevant to AI exposure, such as income, industry, or geographic location, were beyond the scope of this analysis. Furthermore, the analysis did not attempt to establish causal relationships between demographic characteristics and AI exposure.
+
+    If I was to expand this project in the future, I would incorporate additional demographic and socioeconomic variables and use more detailed occupation classifications to better capture within-occupation differences. I would also consider applying statistical modelling techniques to examine associations between demographic characteristics and AI-exposed occupations.
+
+8.  AI was used throughout the project as a learning and support tool rather than a source of definitive information. I primarily used AI to clarify concepts, troubleshoot R code, and discuss alternative approaches to structuring the research questions and analysis. It was particularly helpful in helping me understand the distinction between analysing demographic composition within highly AI-exposed occupations and analysing the proportion of demographic groups employed in highly AI-exposed occupations, and determining which approach aligned best with my research question.
+
+    AI-generated responses were not always accepted without further questioning. I frequently queried the responses and, where appropriate, supplied additional context while maintaining privacy considerations. In several cases, suggestions from AI were questioned, revised, or rejected after further investigation and validation. 
+
+    Overall, AI functioned as an interactive learning support tool that assisted with problem-solving and understanding, while all final decisions regarding processing, analysis, and interpretation were my responsibility.
+
+9.  [GitHub Repo](https://github.com/pbzhangg/ETC5512_assignment_4)
+
+    **Version 1 - Initial Research Question (Commit f6369d5)**
+
+    The initial version explored the broad question of how AI exposure is distributed across occupations and demographic groups in Australia. At this stage, the project focused on exploring and processing the original datasets. After realising that feedback suggested that the scope was too broad and would benefit from further refinement, the scope was narrowed.
+
+    **Version 2 - Refined Scope (Commit a88893c)**
+
+    The research question was narrowed to focus on how demographic characteristics influence AI exposure. In this version, the motivation, research questions, and planned analyses were revised to ensure better alignment between the available data and intended conclusions. 
+
+    **Version 3 - Deriving an AI Exposure Score (Commit 17c99b7)**
+
+    This version attempted to create a single overall AI exposure measure by combining and averaging the augmentation and automation scores. After further investigation, I decided not to use this derived exposure score measure as it obscured important differences between augmentation and automation. Instead, the augmentation and automation measures were analysed separately to provide a more meaningful interpretation of occupational AI exposure.
+
+    **Version 4 - Revising the Demographic Analysis** **(Commit 324b6cb)**
+
+    Initially, I examined the demographic composition of highly AI-exposed occupations. However, I realised that it answered a different question from the intended one. Therefore, I revised the analysis to examine the proportion of each demographic group employed in highly AI-exposed occupations instead. This was an important conceptual improvement because it aligned better with the research question and resulted in more interpretable findings.
+
+### AI acknowledgment
+
+I used AI as a general support tool while completing this assignment. Its role was to help understand unfamiliar concepts rather than produce any of the work for me. The generated content was cross-checked with online sources as well.
+
+More specifically, I used AI to:
+
+-   Understand the distinction between demographic composition of highly AI-exposed occupations and the proportion of each demographic group employed in highly AI-exposed occupations.
+-   How to split up variable that has encoding of multiple variables within it?
+-   What is the difference between augmentation and automation?
+
+I independently developed all code, written text, and interpretations, using AI only for conceptual clarification.
+
+Here is the link to all prompts used:
+
+-   <https://chatgpt.com/share/6a2eaddd-e490-83ec-9173-1059f0b7a894>
+
+-   <https://chatgpt.com/s/t_6a2eae429e10819182abf56dda2710b1>
+
+-   <https://chatgpt.com/s/t_6a2eae8d8f80819184475d8bffad5e2e>
 :::
