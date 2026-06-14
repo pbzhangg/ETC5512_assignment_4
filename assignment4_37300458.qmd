@@ -388,9 +388,29 @@ The age-based results reveal a strong increasing trend in AI exposure concentrat
 
 Overall. the results indicate clear demographic stratification in AI exposure. Female and older workers are more heavily represented in occupations with higher generative AI exposure, suggesting that the potential impacts of AI adoption may not be evenly distributed across the workforce.
 
-**Conclusions**
+**To what extent are highly AI-exposed occupations characterised by AI augmentation versus AI automation?**
 
-**References**
+```{r}
+ai_direction <- processed_data %>%
+  distinct(major_occupation_group, ai_augmentation_score, ai_automation_score) %>%
+  mutate(ai_balance = ai_augmentation_score - ai_automation_score)
+
+
+ggplot(ai_direction, aes(x = reorder(major_occupation_group, ai_balance), y = ai_balance)) +
+  geom_col() +
+  coord_flip() + 
+  labs(
+    title = "Balance Between AI Augmentation and Automation Exposure by Occupation",
+    x = "Major Occupation Group",
+    y = "Augmentation minus Automation (AI balance)"
+  )
+```
+
+Across all major occupation groups, AI augmentation exposure scores are consistently higher than AI automation exposure scores, resulting in positive AI balance values for every occupation group. This indicates that generative AI is generally more associated with task support and enhancement rather than full task replacement across the Australian workforce.
+
+### **Conclusions**
+
+## **References**                                                                                                              
 
 <!-- Task 3 Tab: Behind the Scenes -  -->
 
