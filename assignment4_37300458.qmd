@@ -408,7 +408,15 @@ ggplot(ai_direction, aes(x = reorder(major_occupation_group, ai_balance), y = ai
 
 Across all major occupation groups, AI augmentation exposure scores are consistently higher than AI automation exposure scores, resulting in positive AI balance values for every occupation group. This indicates that generative AI is generally more associated with task support and enhancement rather than full task replacement across the Australian workforce.
 
-### **Conclusions**
+### **Conclusion**
+
+Overall, this analysis showed that generative AI exposure in the Australian workforce is not evenly distributed and is closely associated with occupational structure and demographic composition. Rather than affecting all workers evenly, AI exposure varies systematically depending on the types of occupations in which different demographic groups are employed.
+
+Female workers are more concentrated in high AI-exposure occupations compared to male workers, large reflecting their higher representation in clerical and administrative roles, which tend to have higher exposure scores. Age patterns also show variation, with older workers generally having higher concentrations in high-exposure occupations. However, this pattern should be interpreted with caution, as it likely reflects the differences in occupational structure and workforce participation rather than a direct effect of age on AI exposure.
+
+Across occupations, AI exposure is consistently more strongly characterised by augmentation than automation, suggesting that generative AI is more likely to support and enhance work tasks rather than fully replace them. Even in occupations with higher automation estimation, augmentation remains the dominant form of exposure.
+
+These findings indicate that demographic differences in AI exposure are primarily driven by occupational distribution rather than demographic characteristics directly. The impact of generative AI on the Australian workforce is therefore best understood as a structural issue, shaped by where different groups are employed rather than inherent differences between demographic groups themselves.
 
 ## **References**                                                                                                              
 
