@@ -8,3 +8,4 @@ ai_augmentation_score, numeric, Estimated generative AI augmentation exposure sc
 ai_automation_score, numeric, Estimated generative AI automation exposure score for the occupation group, Mean automation score from JSA occupational dataset
 hybridisation, numeric, Occupational hybridisation potential index, Mean of JSA hybridisation differential scores (scaled by 1000)
 specialisation, numeric, Occupational specialisation potential index, Mean of JSA specialisation differential scores (scaled by 1000)
+ai_balance, numeric, Difference between AI augmentation and AI automation exposure for an occupation group, ai_augmentation_score - ai_automation_score
