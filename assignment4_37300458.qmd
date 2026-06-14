@@ -281,6 +281,24 @@ occupation_exposure <- processed_data %>%
 
 occupation_exposure %>%
   arrange(desc(ai_exposure_score))
+
+ggplot(
+  occupation_exposure,
+  aes(
+    x = reorder(
+      major_occupation_group,
+      ai_exposure_score
+    ),
+    y = ai_exposure_score
+  )
+) +
+  geom_col() +
+  coord_flip() +
+  labs(
+    title = "AI Exposure Score by Occupation",
+    x = "Occupation Group",
+    y = "AI Exposure Score"
+  )
 ```
 
 **Conclusions**
