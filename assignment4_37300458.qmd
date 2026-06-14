@@ -252,7 +252,7 @@ In addition to the main analysis report, the following files are provided for ma
 
 ## Blog post
 
-**Motivation**
+### **Motivation**
 
 Generative AI has rapidly become one of the most significant technological advancements shaping modern workplaces. In Australia, AI adoption is increasing across industries, with Jobs and Skills Australia highlighting generative AI as a key force likely to influence how work is performed rather than simply replacing jobs.
 
@@ -260,7 +260,7 @@ However, AI exposure is not expected to be uniform across the workforce. Differe
 
 This blog explores how generative AI exposure varies across occupations in the Australian workforce and examines how demographic characteristics such as age and sex is distributed across occupations with differing levels of AI exposure. It also compares different two types of AI exposure: augmentation (where AI supports human work) and automation (where AI replaces tasks).
 
-**Data**
+### Data
 
 This analysis combines two publicly available datasets.
 
@@ -270,44 +270,62 @@ The second dataset is the Jobs and Skills Australia (JSA) Generative AI Exposure
 
 The datasets were merged using ANZSCO major occupation group classifications to ensure comparability between occupational structures.
 
-**Analysis**
+### Analysis
+
+**Which occupations exhibit the highest and lowest levels of generative AI exposure scores?**
 
 ```{r}
 occupation_exposure <- processed_data %>%
   distinct(major_occupation_group,
            ai_augmentation_score,
-           ai_automation_score) %>%
-  mutate(ai_exposure_score = (ai_augmentation_score + ai_automation_score) / 2)
-
-occupation_exposure %>%
-  arrange(desc(ai_exposure_score))
+           ai_automation_score)
 
 ggplot(
   occupation_exposure,
   aes(
     x = reorder(
       major_occupation_group,
-      ai_exposure_score
+      ai_augmentation_score
     ),
-    y = ai_exposure_score
+    y = ai_augmentation_score
   )
 ) +
   geom_col() +
   coord_flip() +
   labs(
-    title = "AI Exposure Score by Occupation",
+    title = "AI Augmentation Exposure Score by Occupation",
     x = "Occupation Group",
-    y = "AI Exposure Score"
+    y = "AI Augmentation Exposure Score"
+  )
+
+ggplot(
+  occupation_exposure,
+  aes(
+    x = reorder(
+      major_occupation_group,
+      ai_automation_score
+    ),
+    y = ai_automation_score
+  )
+) +
+  geom_col() +
+  coord_flip() +
+  labs(
+    title = "AI Automation Exposure Score by Occupation",
+    x = "Occupation Group",
+    y = "AI Automation Exposure Score"
   )
 ```
 
-A composite AI exposure score was derived as the average of the augmentation and automation exposure scores provided by Jobs and Skills Australia. This score was intended to provide a single measure summarising the overall potential impact of generative AI across occupation groups.
+To examine how generative AI exposure varies across occupations, AI augmentation and AI automation exposure scores were compared across major occupation groups. This approach allows for a more nuanced understanding of how AI is likely to influence different types of work, distinguishing between AI that supports and enhance tasks (augmentation) and AI that automates or replaces tasks (automation).
 
-The results suggest substantial variation in AI exposure across occupations. Clerical and Administrative Workers recorded the highest AI exposure score (0.646), followed by Sales Workers (0.563), Managers (0.543), and Professional (0.542). In contrast, Labourer had the lowest exposure score (0.326), followed by Machinery Operators and Drivers (0.411), Technicians and Trades Workers (0.432), and Community and Personal Service Workers (0.434).
+The results show a clear ranking pattern across the different major occupation groups, but with important differences between augmentation and automation exposure. Professionals, Clerical and Administrative Workers, and Managers record the highest augmentation exposure scores (0.693, 0.692, and 0.691 respectively), indicating that these occupations are most likely to experience AI as a supportive tool that enhances productivity, decision-making, and knowledge-based tasks.
 
-These findings indicate that occupations involving information processing, administrative tasks, and communication are generally more exposed to generative AI technologies than occupations involving manual, physical, or trade-based tasks. Clerical and Administrative Workers appear particularly exposed, likely due to their routine documentation, and information-management tasks are well suited to generative AI tools.
+In contrast, automation exposure is highest for Clerical and Administrative Workers (0.600), Sales Workers (0.475), and Managers (0.395). This suggests that clerical roles in particular are more vulnerable to task automation relative to other occupations, reflecting the routine and structured nature of many of the administrative tasks. Sales and managerial occupations also show moderate automation exposure, although still lower than their augmentation scores.
 
-The ranking also suggests that generative AI exposure is not distributed evenly across the workforce. Occupations that are associated with office-based, knowledge-intensive work exhibit substantially higher exposure scores than occupations requiring physical labour or specialised manual skills. This pattern aligns with broader expectations that generative AI is most capable of performing routine information-processing and administrative tasks.
+Occupations involving manual labour and technical work, such as Machinery Operators and Drivers (augmentation: 0.548, automation: 0.275) and Labourers (augmentation: 0.456, automation: 0.196), consistently record the lowest exposure scores across both dimensions. This indicates that these occupations are less directly affected by generative AI technologies, likely due to their reliance on physical rather than information-based tasks.
+
+Overall, the comparison highlights a key distinction in how AI exposure manifests across the workforce. High-skilled, knowledge-intensive occupations tend to exhibit higher augmentation potential, suggesting AI will primarily complement rather than replace human work. In contrast, clerical occupations stand out as having relatively high exposure to both augmentation and automation, making them the most broadly affected group. This divergence emphases that AI integration in the Australian workforce is not uniformly distributed and depends strongly on the nature of the occupational tasks.
 
 ```{r}
 high_exposure <- occupation_exposure %>%
