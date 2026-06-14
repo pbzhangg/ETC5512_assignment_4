@@ -303,7 +303,8 @@ ggplot(
 
 A composite AI exposure score was derived as the average of the augmentation and automation exposure scores provided by Jobs and Skills Australia. This score was intended to provide a single measure summarising the overall potential impact of generative AI across occupation groups.
 
-The results suggest substantial variation in AI exposure across occupations. Clerical and Administrative Workers recorded the highest AI exposure score (0.646), followed by Sales Workers (0.563), Managers (0.543), and Professional (0.542). In contrast, Labourer had the lowest exposure score (0.326), followed by Machinery Operators and Drivers (0.411), Technicians and Trades Workers (0.432), and Community and Personal Service Workers (0.434).\
+The results suggest substantial variation in AI exposure across occupations. Clerical and Administrative Workers recorded the highest AI exposure score (0.646), followed by Sales Workers (0.563), Managers (0.543), and Professional (0.542). In contrast, Labourer had the lowest exposure score (0.326), followed by Machinery Operators and Drivers (0.411), Technicians and Trades Workers (0.432), and Community and Personal Service Workers (0.434).
+
 These findings indicate that occupations involving information processing, administrative tasks, and communication are generally more exposed to generative AI technologies than occupations involving manual, physical, or trade-based tasks. Clerical and Administrative Workers appear particularly exposed, likely due to their routine documentation, and information-management tasks are well suited to generative AI tools.
 
 The ranking also suggests that generative AI exposure is not distributed evenly across the workforce. Occupations that are associated with office-based, knowledge-intensive work exhibit substantially higher exposure scores than occupations requiring physical labour or specialised manual skills. This pattern aligns with broader expectations that generative AI is most capable of performing routine information-processing and administrative tasks.
@@ -346,6 +347,14 @@ ggplot(age_comp, aes(x = age_group, y = proportion)) +
     y = "Proportion"
   )
 ```
+
+After identifying the occupations with above-median AI exposure scores, the demographic composition of workers employed in these occupations was examined. This provides insight into which groups may be most affected by changes associated with generative AI technologies.
+
+The results show that females make up the majority of workers employed in highly AI exposed occupations, accounting for 57.1% of workers compared with 42.9% for males. This suggests that women more heavily represent occupations identified as highly exposed to generative AI, particularly in administrative, clerical, professional, and sales-related roles.
+
+The age distribution of workers in highly exposed occupations is concentrated among prime working-age groups. Workers aged 35-44 years represent the largest share (24.3%), followed closely by those ages 25-34 years (22.4%) and 45-54 years (21.7%). These three age groups collectively account for almost 70% of workers employed in highly exposed occupations. In contrast, relatively few workers are observed in the youngest and oldest age groups, with workers aged 15-19 years representing only 3.8% and those aged 75 years and over accounting for less than 1%.
+
+These results suggest that exposure to generative AI is concentrated among workers in the middle ages rather than among younger and older workers. This pattern may reflect the occupational composition of highly exposed jobs, which tend to include professional, managerial, administrative, and sales occupations that are commonly staffed by experienced workers.
 
 **Conclusions**
 
