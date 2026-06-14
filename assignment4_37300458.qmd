@@ -327,52 +327,66 @@ Occupations involving manual labour and technical work, such as Machinery Operat
 
 Overall, the comparison highlights a key distinction in how AI exposure manifests across the workforce. High-skilled, knowledge-intensive occupations tend to exhibit higher augmentation potential, suggesting AI will primarily complement rather than replace human work. In contrast, clerical occupations stand out as having relatively high exposure to both augmentation and automation, making them the most broadly affected group. This divergence emphases that AI integration in the Australian workforce is not uniformly distributed and depends strongly on the nature of the occupational tasks.
 
+**Which demographic groups (age and sex) are most concentrated in occupations with high AI-exposure?**
+
 ```{r}
+
 high_exposure <- occupation_exposure %>%
-  mutate(high_exposure = ai_exposure_score > median(ai_exposure_score))
+  mutate(high_exposure = ai_augmentation_score > median(ai_augmentation_score))
 
 demographic_exposure <- processed_data %>%
   group_by(sex, age_group, major_occupation_group) %>%
   summarise(total = sum(count), .groups = "drop") %>%
   left_join(high_exposure, by = "major_occupation_group")
 
-high_occ <- demographic_exposure %>%
-  filter(high_exposure)
+demographic_totals <- processed_data %>%
+  group_by(sex, age_group) %>%
+  summarise(total_all = sum(count), .groups = "drop")
 
-sex_comp <- high_occ %>%
-  group_by(sex) %>%
-  summarise(total = sum(total)) %>%
-  mutate(proportion = total / sum(total))
+high_counts <- demographic_exposure %>%
+  filter(high_exposure) %>%
+  group_by(sex, age_group) %>%
+  summarise(high_total = sum(total), .groups = "drop")
 
-age_comp <- high_occ %>%
-  group_by(age_group) %>%
-  summarise(total = sum(total)) %>%
-  mutate(proportion = total / sum(total))
-
-ggplot(sex_comp, aes(x = sex, y = proportion)) +
-  geom_col() +
-  labs(
-    title = "Sex Composition of High AI-Exposure Occupations",
-    x = "Sex",
-    y = "Proportion"
+concentration <- demographic_totals %>%
+  left_join(high_counts, by = c("sex", "age_group")) %>%
+  mutate(
+    high_total = ifelse(is.na(high_total), 0, high_total),
+    proportion_high = high_total / total_all
   )
 
-ggplot(age_comp, aes(x = age_group, y = proportion)) +
+sex_concentration <- concentration %>%
+  group_by(sex) %>%
+  summarise(proportion_high = sum(high_total) / sum(total_all))
+
+ggplot(sex_concentration, aes(x = sex, y = proportion_high)) +
   geom_col() +
   labs(
-    title = "Age Composition of High AI-Exposure Occupations",
-    x = "Age",
-    y = "Proportion"
+    title = "Sex Concentration in High AI-Exposure Occupations",
+    x = "Sex",
+    y = "Proportion in High Exposure Occupations"
+  )
+
+age_concentration <- concentration %>%
+  group_by(age_group) %>%
+  summarise(proportion_high = sum(high_total) / sum(total_all))
+
+ggplot(age_concentration, aes(x = age_group, y = proportion_high)) +
+  geom_col() +
+  labs(
+    title = "Age Group Concentration in High AI-Exposure Occupations",
+    x = "Age Group",
+    y = "Proportion in High Exposure Occupations"
   )
 ```
 
-After identifying the occupations with above-median AI exposure scores, the demographic composition of workers employed in these occupations was examined. This provides insight into which groups may be most affected by changes associated with generative AI technologies.
+The proportion of workers employed in high AI-exposure occupations varies substantially across both age and sex groups, indicating clear demographic differences in generative AI exposure within the Australian workforce.
 
-The results show that females make up the majority of workers employed in highly AI exposed occupations, accounting for 57.1% of workers compared with 42.9% for males. This suggests that women more heavily represent occupations identified as highly exposed to generative AI, particularly in administrative, clerical, professional, and sales-related roles.
+The findings show that female workers have a higher concentration in high-exposure occupations compared to male workers. Approximately 69.9% of female workers are employed in occupations classified with high AI-exposure, compared with 49.8% of male workers. This suggests that women are more likely than men to be working in occupations that are more strongly affected by generative AI technologies, particularly in roles such as clerical and administrative occupations, which tend to have higher exposure scores.
 
-The age distribution of workers in highly exposed occupations is concentrated among prime working-age groups. Workers aged 35-44 years represent the largest share (24.3%), followed closely by those ages 25-34 years (22.4%) and 45-54 years (21.7%). These three age groups collectively account for almost 70% of workers employed in highly exposed occupations. In contrast, relatively few workers are observed in the youngest and oldest age groups, with workers aged 15-19 years representing only 3.8% and those aged 75 years and over accounting for less than 1%.
+The age-based results reveal a strong increasing trend in AI exposure concentration with age. Younger worked aged 15-19 have the lowest proportion in high-exposure occupations (43.1%), followed closely by those aged 20-24 (46.3%). In contrast, workers in older age groups show significantly higher concentrations, with the proportion rising steadily across age bands. Workers aged 35-44 (64.8%), 45-54 (63.1%), and 55-64 (59.8%) all exhibit high levels of exposure, while the highest proportions are observed among the older groups: 75-84 years (74.2%) and 85+ years (81.5%). This pattern suggest that exposure to generative AI is most concentrated among older works, which may reflect their higher representation in established professional, administrative, and managerial occupations. In contrast, younger workers appear less concentrated in high-exposure roles, potentially reflecting their greater presence in entry-level, or transitional positions that are less directly affected by generative AI.
 
-These results suggest that exposure to generative AI is concentrated among workers in the middle ages rather than among younger and older workers. This pattern may reflect the occupational composition of highly exposed jobs, which tend to include professional, managerial, administrative, and sales occupations that are commonly staffed by experienced workers.
+Overall. the results indicate clear demographic stratification in AI exposure. Female and older workers are more heavily represented in occupations with higher generative AI exposure, suggesting that the potential impacts of AI adoption may not be evenly distributed across the workforce.
 
 **Conclusions**
 
