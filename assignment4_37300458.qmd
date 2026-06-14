@@ -301,6 +301,13 @@ ggplot(
   )
 ```
 
+A composite AI exposure score was derived as the average of the augmentation and automation exposure scores provided by Jobs and Skills Australia. This score was intended to provide a single measure summarising the overall potential impact of generative AI across occupation groups.
+
+The results suggest substantial variation in AI exposure across occupations. Clerical and Administrative Workers recorded the highest AI exposure score (0.646), followed by Sales Workers (0.563), Managers (0.543), and Professional (0.542). In contrast, Labourer had the lowest exposure score (0.326), followed by Machinery Operators and Drivers (0.411), Technicians and Trades Workers (0.432), and Community and Personal Service Workers (0.434).\
+These findings indicate that occupations involving information processing, administrative tasks, and communication are generally more exposed to generative AI technologies than occupations involving manual, physical, or trade-based tasks. Clerical and Administrative Workers appear particularly exposed, likely due to their routine documentation, and information-management tasks are well suited to generative AI tools.
+
+The ranking also suggests that generative AI exposure is not distributed evenly across the workforce. Occupations that are associated with office-based, knowledge-intensive work exhibit substantially higher exposure scores than occupations requiring physical labour or specialised manual skills. This pattern aligns with broader expectations that generative AI is most capable of performing routine information-processing and administrative tasks.
+
 ```{r}
 high_exposure <- occupation_exposure %>%
   mutate(high_exposure = ai_exposure_score > median(ai_exposure_score))
