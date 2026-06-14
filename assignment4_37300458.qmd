@@ -29,7 +29,7 @@ editor: visual
 
     Understanding AI exposure is becoming increasingly important as the impacts of AI use are likely to be unevenly distributed across the workforce. Jobs and Skills Australia (2025) suggests that generative AI is more likely to augment human work than replace it, where the greatest potential for automation is concentrated in more routine tasks. The report also highlighted substantial differences in AI exposure across occupations, indicating that some workers may experience greater changes to their work than others.
 
-    This topic was chosen because it combines a highly relevant contemporary issue with publicly available Australian labour market data and demographic census data. By examining how AI exposure is distributed across occupations and demographic groups, the analysis aims to identify which occupations exhibit the most extreme levels of AI exposure, and whether these highly exposed occupations are characterised more by AI augmentation or AI automation. This contributes to a better understanding of how exposure to generative AI is distributed across the Australian workforce.
+    This topic was chosen because it combines a highly relevant contemporary issue with publicly available Australian labour market data and demographic census data. By examining how AI exposure is distributed across occupations and demographic groups, the analysis aims to identify how AI exposure is distributed across occupations and examine differences in the relative importance of AI augmentation and automation across occupations. This contributes to a better understanding of how exposure to generative AI is distributed across the Australian workforce.
 
 2.  **Data Sources**
 
@@ -51,7 +51,7 @@ editor: visual
 
     The second dataset is the occupation-level Generative AI Exposure dataset published by Jobs and Skills Australia as part of their "*Our Gen AI Transition: Exposure, Adaptation and Dynamism*" study. The dataset is a model-based research dataset containing estimated measures of generative AI exposure for occupations, including indicators describing the extent to which AI may augment or automate occupational tasks within an occupation.
 
-    This dataset is suitable for this analysis because it directly measures the potential exposure of occupations to generative AI technologies. Linking these exposure scores to Census occupation data enables the analysis to build on Jobs and Skills Australia's existing report and identify how AI exposure is distributed across different demographic groups within highly exposed occupations, and compare the relative importance of augmentation and automation in the Australian workforce.
+    This dataset is suitable for this analysis because it directly measures the potential exposure of occupations to generative AI technologies. Linking these exposure scores to Census occupation data enables the analysis to build on Jobs and Skills Australia's existing report and examine how demographic groups are distributed across occupations with different levels of AI exposure, and compare AI augmentation and automation scores across occupations in the Australian workforce.
 
     The dataset is publicly available through Jobs and Skills Australia and is released under the Australian Government's Creative Commons Attribution (CC BY) licence.
 
@@ -234,11 +234,35 @@ sum(is.na(processed_data$ai_augmentation_score))
 sum(is.na(processed_data$ai_automation_score))
 ```
 
-11. Save the processed data into the `processed_data` directory.
+11. Derive AI balance from augmentation score minus automation score.
+
+```{r}
+processed_data <- processed_data %>%
+  mutate(ai_balance = ai_augmentation_score - ai_automation_score)
+```
+
+12. Save the processed data into the `processed_data` directory.
 
 ```{r}
 write_rds(processed_data, "processed_data/merged_data.rds")
 ```
+
+13. Check distribution of workers by age group.
+
+```{r}
+age_distribution <- processed_data %>%
+  group_by(age_group) %>%
+  summarise(total = sum(count), .groups = "drop")
+
+ggplot(age_distribution, aes(x = age_group, y = total)) + geom_col() +
+  labs(
+    title = "Distribution of Workers by Age Group",
+    x = "Age Group",
+    y = "Number of Workers"
+  )
+```
+
+Checking the distribution of rows in each age group shows that the workforce is unevenly distributed across age groups. The majority of workers are concentrated in the middle age categories (25-54 years), while younger workers (15-24 years) and older workers (65+ years) represent a much smaller proportion of the workforce. It is important to keep note of this uneven distribution when interpreting later results, as proportional comparisons across age groups may be influenced by differences in group size.
 
 **Additional Files for Marker Review**
 
@@ -256,9 +280,9 @@ In addition to the main analysis report, the following files are provided for ma
 
 Generative AI has rapidly become one of the most significant technological advancements shaping modern workplaces. In Australia, AI adoption is increasing across industries, with Jobs and Skills Australia highlighting generative AI as a key force likely to influence how work is performed rather than simply replacing jobs.
 
-However, AI exposure is not expected to be uniform across the workforce. Different occupations involve different task structures, meaning some roles are more likely to be affected by AI systems than others. At the same times, the demographic composition of occupations may shape which groups of workers are most represented in highly AI-exposed roles.
+However, AI exposure is not expected to be uniform across the workforce. Different occupations involve different task structures, meaning some roles are more likely to be affected by AI systems than others. At the same time, the demographic composition of occupations may shape which groups of workers are most represented in highly AI-exposed roles.
 
-This blog explores how generative AI exposure varies across occupations in the Australian workforce and examines how demographic characteristics such as age and sex is distributed across occupations with differing levels of AI exposure. It also compares different two types of AI exposure: augmentation (where AI supports human work) and automation (where AI replaces tasks).
+This blog explores how generative AI exposure varies across occupations in the Australian workforce, and how demographic characteristics such as age and sex are distributed across occupations with differing levels of AI exposure. It also compares two different types of AI exposure: augmentation (where AI supports human work) and automation (where AI replaces tasks).
 
 ### Data
 
@@ -317,15 +341,15 @@ ggplot(
   )
 ```
 
-To examine how generative AI exposure varies across occupations, AI augmentation and AI automation exposure scores were compared across major occupation groups. This approach allows for a more nuanced understanding of how AI is likely to influence different types of work, distinguishing between AI that supports and enhance tasks (augmentation) and AI that automates or replaces tasks (automation).
+To examine how generative AI exposure varies across occupations, AI augmentation and AI automation exposure scores were compared across major occupation groups. This approach allows for a more nuanced understanding of how AI is likely to influence different types of work, distinguishing between AI that supports and enhances tasks (augmentation) and AI that automates or replaces tasks (automation).
 
 The results show a clear ranking pattern across the different major occupation groups, but with important differences between augmentation and automation exposure. Professionals, Clerical and Administrative Workers, and Managers record the highest augmentation exposure scores (0.693, 0.692, and 0.691 respectively), indicating that these occupations are most likely to experience AI as a supportive tool that enhances productivity, decision-making, and knowledge-based tasks.
 
-In contrast, automation exposure is highest for Clerical and Administrative Workers (0.600), Sales Workers (0.475), and Managers (0.395). This suggests that clerical roles in particular are more vulnerable to task automation relative to other occupations, reflecting the routine and structured nature of many of the administrative tasks. Sales and managerial occupations also show moderate automation exposure, although still lower than their augmentation scores.
+In contrast, automation exposure is highest for Clerical and Administrative Workers (0.600), Sales Workers (0.475), and Managers (0.395). This suggests that clerical roles in particular show higher automation exposure, reflecting the routine and structured nature of administrative tasks. Sales and managerial occupations also show moderate automation exposure, although still lower than their augmentation scores.
 
 Occupations involving manual labour and technical work, such as Machinery Operators and Drivers (augmentation: 0.548, automation: 0.275) and Labourers (augmentation: 0.456, automation: 0.196), consistently record the lowest exposure scores across both dimensions. This indicates that these occupations are less directly affected by generative AI technologies, likely due to their reliance on physical rather than information-based tasks.
 
-Overall, the comparison highlights a key distinction in how AI exposure manifests across the workforce. High-skilled, knowledge-intensive occupations tend to exhibit higher augmentation potential, suggesting AI will primarily complement rather than replace human work. In contrast, clerical occupations stand out as having relatively high exposure to both augmentation and automation, making them the most broadly affected group. This divergence emphases that AI integration in the Australian workforce is not uniformly distributed and depends strongly on the nature of the occupational tasks.
+Overall, the comparison highlights a key distinction in how AI exposure manifests across the workforce. High-skilled, knowledge-intensive occupations tend to exhibit higher augmentation potential, suggesting AI will primarily complement rather than replace human work. In contrast, clerical occupations stand out as having relatively high exposure to both augmentation and automation, making them the most broadly affected group. This divergence emphasises that AI integration in the Australian workforce is not uniformly distributed and depends strongly on the structure of the occupational tasks.
 
 **Which demographic groups (age and sex) are most concentrated in occupations with high AI-exposure?**
 
@@ -380,20 +404,30 @@ ggplot(age_concentration, aes(x = age_group, y = proportion_high)) +
   )
 ```
 
-The proportion of workers employed in high AI-exposure occupations varies substantially across both age and sex groups, indicating clear demographic differences in generative AI exposure within the Australian workforce.
+To examine how generative AI exposure is distributed across demographic groups, occupations were classified as high exposure relative to the median AI augmentation score, creating a binary grouping of occupations into above-median and below-median exposure categories.
 
-The findings show that female workers have a higher concentration in high-exposure occupations compared to male workers. Approximately 69.9% of female workers are employed in occupations classified with high AI-exposure, compared with 49.8% of male workers. This suggests that women are more likely than men to be working in occupations that are more strongly affected by generative AI technologies, particularly in roles such as clerical and administrative occupations, which tend to have higher exposure scores.
+The results show clear differences in the distribution of workers across demographic groups.
 
-The age-based results reveal a strong increasing trend in AI exposure concentration with age. Younger worked aged 15-19 have the lowest proportion in high-exposure occupations (43.1%), followed closely by those aged 20-24 (46.3%). In contrast, workers in older age groups show significantly higher concentrations, with the proportion rising steadily across age bands. Workers aged 35-44 (64.8%), 45-54 (63.1%), and 55-64 (59.8%) all exhibit high levels of exposure, while the highest proportions are observed among the older groups: 75-84 years (74.2%) and 85+ years (81.5%). This pattern suggest that exposure to generative AI is most concentrated among older works, which may reflect their higher representation in established professional, administrative, and managerial occupations. In contrast, younger workers appear less concentrated in high-exposure roles, potentially reflecting their greater presence in entry-level, or transitional positions that are less directly affected by generative AI.
+**Sex**
 
-Overall. the results indicate clear demographic stratification in AI exposure. Female and older workers are more heavily represented in occupations with higher generative AI exposure, suggesting that the potential impacts of AI adoption may not be evenly distributed across the workforce.
+The findings show that female workers are more concentrated in high AI-exposure occupations compared to male workers. Approximately 69.9% of female workers are employed in above-median AI augmentation occupations, compared with 49.8% of male workers.
+
+This suggests that women are more likely than men to be working in occupations that are more strongly associated with higher generative AI exposure scores, particularly in roles such as clerical and administrative occupations, which tend to have higher exposure scores.
+
+**Age**
+
+The age-based results reveal a general increasing trend in AI exposure concentration with age. Younger workers aged 15-19 (43.1%) and 20-24 (46.3%) have the lowest proportion in high-exposure occupations.
+
+In contrast, workers in older age groups show significantly higher concentrations, with the proportion rising steadily across age bands. The highest proportions are observed among the older groups: 75-84 years (74.2%) and 85+ years (81.5%). This pattern suggests that generative AI exposure is more concentrated among older workers, likely reflecting their stronger representation in professional, managerial, and administrative occupations.
+
+Overall, the results indicate clear demographic stratification in occupational AI exposure. However, these differences primarily reflect occupational segregation by age and sex, rather than direct demographic effects on AI exposure itself.
 
 **To what extent are highly AI-exposed occupations characterised by AI augmentation versus AI automation?**
 
 ```{r}
 ai_direction <- processed_data %>%
-  distinct(major_occupation_group, ai_augmentation_score, ai_automation_score) %>%
-  mutate(ai_balance = ai_augmentation_score - ai_automation_score)
+  group_by(major_occupation_group) %>%
+  summarise(ai_balance = first(ai_balance))
 
 
 ggplot(ai_direction, aes(x = reorder(major_occupation_group, ai_balance), y = ai_balance)) +
@@ -406,17 +440,17 @@ ggplot(ai_direction, aes(x = reorder(major_occupation_group, ai_balance), y = ai
   )
 ```
 
-Across all major occupation groups, AI augmentation exposure scores are consistently higher than AI automation exposure scores, resulting in positive AI balance values for every occupation group. This indicates that generative AI is generally more associated with task support and enhancement rather than full task replacement across the Australian workforce.
+Across all major occupation groups, augmentation exposure scores exceed automation exposure scores, resulting in positive AI balance values. This suggests that generative AI is currently more associated with task augmentation than task replacement in the Australian workforce.
 
 ### **Conclusion**
 
-Overall, this analysis showed that generative AI exposure in the Australian workforce is not evenly distributed and is closely associated with occupational structure and demographic composition. Rather than affecting all workers evenly, AI exposure varies systematically depending on the types of occupations in which different demographic groups are employed.
+Overall, this analysis showed that generative AI exposure in the Australian workforce is unevenly distributed and closely associated with occupational structure. AI exposure varies systematically depending on the types of occupations in which different demographic groups are employed.
 
-Female workers are more concentrated in high AI-exposure occupations compared to male workers, large reflecting their higher representation in clerical and administrative roles, which tend to have higher exposure scores. Age patterns also show variation, with older workers generally having higher concentrations in high-exposure occupations. However, this pattern should be interpreted with caution, as it likely reflects the differences in occupational structure and workforce participation rather than a direct effect of age on AI exposure.
+Female workers are more concentrated in high AI-exposure occupations compared to male workers, largely reflecting their higher representation in clerical and administrative roles, which tend to have higher exposure scores. Age patterns also show variation, with older workers generally having higher concentrations in high-exposure occupations. However, this pattern should be interpreted with caution, as it likely reflects the differences in occupational structure and workforce participation rather than a direct effect of age on AI exposure.
 
 Across occupations, AI exposure is consistently more strongly characterised by augmentation than automation, suggesting that generative AI is more likely to support and enhance work tasks rather than fully replace them. Even in occupations with higher automation estimation, augmentation remains the dominant form of exposure.
 
-These findings indicate that demographic differences in AI exposure are primarily driven by occupational distribution rather than demographic characteristics directly. The impact of generative AI on the Australian workforce is therefore best understood as a structural issue, shaped by where different groups are employed rather than inherent differences between demographic groups themselves.
+These findings suggest that demographic differences in AI exposure are primarily driven by occupational distribution rather than demographic characteristics themselves. The impact of generative AI on the Australian workforce is therefore best understood as a structural issue, shaped by where different groups are employed rather than inherent differences between demographic groups themselves.
 
 ## **References**                                                                                                              
 
