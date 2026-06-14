@@ -13,7 +13,7 @@ editor: visual
 
 1.  **Main Research Question**
 
-    How do demographic characteristics influence exposure to generative AI across occupations in Australia?
+    How are demographic characteristics associated with employment in occupations with different levels of generative AI exposure in Australia?
 
     **Sub-Questions**
 
