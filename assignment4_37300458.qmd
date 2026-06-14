@@ -1,5 +1,5 @@
 ---
-title: "What is your blogpost title? Add it here??"
+title: "Who is most exposed to generative AI? Occupations and demographics in the Australian workforce"
 subtitle: "Assignment 4 ETC5512"
 author: "Who are you?? Add your name here"
 format: html
@@ -252,20 +252,40 @@ In addition to the main analysis report, the following files are provided for ma
 
 ## Blog post
 
-### What's in this section
+**Motivation**
 
-Here is where you should write your blogpost! (Task 2)
+Generative AI has rapidly become one of the most significant technological advancements shaping modern workplaces. In Australia, AI adoption is increasing across industries, with Jobs and Skills Australia highlighting generative AI as a key force likely to influence how work is performed rather than simply replacing jobs.
 
-### Blogpost Structure
+However, AI exposure is not expected to be uniform across the workforce. Different occupations involve different task structures, meaning some roles are more likely to be affected by AI systems than others. At the same times, the demographic composition of occupations may shape which groups of workers are most represented in highly AI-exposed roles.
 
-There is no strict structure for you to follow. However, here is a skeleton structure you may find helpful.
+This blog explores how generative AI exposure varies across occupations in the Australian workforce and examines how demographic characteristics such as age and sex is distributed across occupations with differing levels of AI exposure. It also compares different two types of AI exposure: augmentation (where AI supports human work) and automation (where AI replaces tasks).
 
-1.  Title (is set at the top of this document)
-2.  Motivation\
-3.  Data\
-4.  Analysis\
-5.  Conclusions\
-6.  References
+**Data**
+
+This analysis combines two publicly available datasets.
+
+The first is the Australian Bureau of Statistics (ABS) 2021 Census G60 Occupation by Age by Sex dataset. It provides counts of employed persons across Australian states, age groups, sex, and occupation categories. This dataset provides a detailed view of the demographic structure of the Australian workforce.
+
+The second dataset is the Jobs and Skills Australia (JSA) Generative AI Exposure dataset. It contains occupation-level estimates of AI exposure, including measures of augmentation and automation potential. These scores are model-based estimates of how susceptible occupational tasks are to generative AI technologies.
+
+The datasets were merged using ANZSCO major occupation group classifications to ensure comparability between occupational structures.
+
+**Analysis**
+
+```{r}
+occupation_exposure <- processed_data %>%
+  distinct(major_occupation_group,
+           ai_augmentation_score,
+           ai_automation_score) %>%
+  mutate(ai_exposure_score = (ai_augmentation_score + ai_automation_score) / 2)
+
+occupation_exposure %>%
+  arrange(desc(ai_exposure_score))
+```
+
+**Conclusions**
+
+**References**
 
 <!-- Task 3 Tab: Behind the Scenes -  -->
 
