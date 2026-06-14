@@ -81,7 +81,7 @@ editor: visual
     3.  Click the **Download** button for the *JSA AI Study Interactive Tables* under the Download subsection.
     4.  Save the downloaded XLS data as `raw_exposure_data.xlsx` into the `raw_data` directory.
 
-```{r}
+```{r, warnings = FALSE, messages = FALSE}
 # Load in required packages for reading in raw data
 library(readxl)
 library(sf)
@@ -298,7 +298,7 @@ The datasets were merged using ANZSCO major occupation group classifications to 
 
 **Which occupations exhibit the highest and lowest levels of generative AI exposure scores?**
 
-```{r}
+```{r, echo = FALSE, warnings = FALSE, messages = FALSE}
 occupation_exposure <- processed_data %>%
   distinct(major_occupation_group,
            ai_augmentation_score,
@@ -353,7 +353,7 @@ Overall, the comparison highlights a key distinction in how AI exposure manifest
 
 **Which demographic groups (age and sex) are most concentrated in occupations with high AI-exposure?**
 
-```{r}
+```{r, echo = FALSE, warnings = FALSE, messages = FALSE}
 
 high_exposure <- occupation_exposure %>%
   mutate(high_exposure = ai_augmentation_score > median(ai_augmentation_score))
@@ -424,7 +424,7 @@ Overall, the results indicate clear demographic stratification in occupational A
 
 **To what extent are highly AI-exposed occupations characterised by AI augmentation versus AI automation?**
 
-```{r}
+```{r, echo = FALSE, warnings = FALSE, messages = FALSE}
 ai_direction <- processed_data %>%
   group_by(major_occupation_group) %>%
   summarise(ai_balance = first(ai_balance))
@@ -452,7 +452,23 @@ Across occupations, AI exposure is consistently more strongly characterised by a
 
 These findings suggest that demographic differences in AI exposure are primarily driven by occupational distribution rather than demographic characteristics themselves. The impact of generative AI on the Australian workforce is therefore best understood as a structural issue, shaped by where different groups are employed rather than inherent differences between demographic groups themselves.
 
-## **References**                                                                                                              
+## **References**
+
+Australian Bureau of Statistics. (2021). *G60 – Occupation by age by sex, 2021 Census Geopackage (All geographies)*. <https://www.abs.gov.au/census/find-census-data/geopackages?release=2021&geography=AUST&table=G60&gda=GDA2020>
+
+Australian Bureau of Statistics. (n.d.). *1220.0 – Australian Standard Classification of Occupations (ASCO), First Edition, Revision 1*. [https://www.abs.gov.au/AUSSTATS/abs\@.nsf/DetailsPage/1220.0First%20Edition,%20Revision%201?OpenDocument](https://www.abs.gov.au/AUSSTATS/abs@.nsf/DetailsPage/1220.0First%20Edition,%20Revision%201?OpenDocument)
+
+CSIRO. (2025, December 23). *How CSIRO is guiding Australia’s responsible AI adoption*. [https://www.csiro.au/en/news/All/Articles/2025/December/How-CSIRO-is-guiding-Australias-responsible-AI-adoption](https://www.csiro.au/en/news/All/Articles/2025/December/How-CSIRO-is-guiding-Australias-responsible-AI-adoption?utm_source=chatgpt.com)
+
+Jobs and Skills Australia. (2025). *Generative artificial intelligence capacity study*. <https://www.jobsandskills.gov.au/studies/generative-artificial-intelligence-capacity-study>
+
+Müller K (2025). *here: A Simpler Way to Find Your Files*. doi:10.32614/CRAN.package.here <https://doi.org/10.32614/CRAN.package.here>, R package version 1.0.2, <https://CRAN.R-project.org/package=here>.
+
+Pebesma, E., 2018. Simple Features for R: Standardized Support for Spatial Vector Data. The R Journal 10 (1), 439-446, <https://doi.org/10.32614/RJ-2018-009>
+
+Wickham H, Averick M, Bryan J, Chang W, McGowan LD, François R, Grolemund G, Hayes A, Henry L, Hester J, Kuhn M, Pedersen TL, Miller E, Bache SM, Müller K, Ooms J, Robinson D, Seidel DP, Spinu V, Takahashi K, Vaughan D, Wilke C, Woo K, Yutani H (2019). “Welcome to the tidyverse.” *Journal of Open Source Software*, *4*(43), 1686. doi:10.21105/joss.01686 <https://doi.org/10.21105/joss.01686>.
+
+Wickham H, Bryan J (2025). *readxl: Read Excel Files*. doi:10.32614/CRAN.package.readxl <https://doi.org/10.32614/CRAN.package.readxl>, R package version 1.4.5, <https://CRAN.R-project.org/package=readxl>.
 
 <!-- Task 3 Tab: Behind the Scenes -  -->
 
