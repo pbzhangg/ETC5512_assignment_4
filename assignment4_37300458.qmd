@@ -301,6 +301,29 @@ ggplot(
   )
 ```
 
+```{r}
+high_exposure <- occupation_exposure %>%
+  mutate(high_exposure = ai_exposure_score > median(ai_exposure_score))
+
+demographic_exposure <- processed_data %>%
+  group_by(sex, age_group, major_occupation_group) %>%
+  summarise(total = sum(count), .groups = "drop") %>%
+  left_join(high_exposure, by = "major_occupation_group")
+
+high_occ <- demographic_exposure %>%
+  filter(high_exposure)
+
+sex_comp <- high_occ %>%
+  group_by(sex) %>%
+  summarise(total = sum(total)) %>%
+  mutate(proportion = total / sum(total))
+
+age_comp <- high_occ %>%
+  group_by(age_group) %>%
+  summarise(total = sum(total)) %>%
+  mutate(proportion = total / sum(total))
+```
+
 **Conclusions**
 
 **References**
