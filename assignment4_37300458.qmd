@@ -322,6 +322,22 @@ age_comp <- high_occ %>%
   group_by(age_group) %>%
   summarise(total = sum(total)) %>%
   mutate(proportion = total / sum(total))
+
+ggplot(sex_comp, aes(x = sex, y = proportion)) +
+  geom_col() +
+  labs(
+    title = "Sex Composition of High AI-Exposure Occupations",
+    x = "Sex",
+    y = "Proportion"
+  )
+
+ggplot(age_comp, aes(x = age_group, y = proportion)) +
+  geom_col() +
+  labs(
+    title = "Age Composition of High AI-Exposure Occupations",
+    x = "Age",
+    y = "Proportion"
+  )
 ```
 
 **Conclusions**
