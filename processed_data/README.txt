@@ -7,14 +7,14 @@ The first dataset is the Australian Bureau of Statistics (ABS) Census 2021 G60:
 Occupation by Age by Sex dataset. This dataset was obtained from the Australian 
 Bureau of Statistics and contains aggregated counts of employed persons by state, 
 sex, age group, and occupation. It is based on the 2021 national Census, which aims
-to collect comprehensive demographic and labour force information about residents 
-in Australia. The dataset is released under the Creative Commons Attribution 4.0 
+to collect comprehensive demographic and labour force information from residents 
+of Australia. The dataset is released under the Creative Commons Attribution 4.0 
 International (CC BY 4.0) licence.
 
 The second dataset is the Jobs and Skills Australia (JSA) Generative AI Exposure 
 dataset, which forms part of their "Our Gen AI Transition: Exposure, Adaptation 
-and Dynamism" project. This dataset provides occupation-level estimates of generative 
-AI exposure, including measures of augmentation and automation scores. It is publicly 
+and Dynamism" project. This dataset provides model-based estimates of generative AI 
+exposure at the occupation level, including measures of augmentation and automation scores. It is publicly 
 released under an Australian Government open data licence and is based on modelled 
 estimates of occupational task exposure to generative AI technologies.
 
